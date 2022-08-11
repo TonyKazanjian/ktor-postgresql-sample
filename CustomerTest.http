@@ -4,7 +4,7 @@ POST http://127.0.0.1:8080/customer
 Content-Type: application/json
 
 {
-  "id": "2",
+  "id": 0,
   "firstName": "John",
   "lastName": "Smith",
   "email": "john.smith@company.com"
@@ -17,3 +17,7 @@ Accept: application/json
 ###
 GET http://127.0.0.1:8080/customer/1
 Accept: application/json
+
+###
+DELETE http://127.0.0.1:8080/customer/1
+

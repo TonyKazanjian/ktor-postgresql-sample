@@ -7,6 +7,7 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import io.ktor.server.util.*
 
 fun Route.customerRouting() {
     route("/customer") {
@@ -34,14 +35,17 @@ fun Route.customerRouting() {
             dao.addNewCustomer(customer.firstName, customer.lastName, customer.email)
             call.respondText("Customer stored correctly", status = HttpStatusCode.Created)
         }
-//        delete("{id?}") {
-//            val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
-//            if (customerStorage.removeIf { it.id == id }) {
-//                call.respondText("Customer removed correctly", status = HttpStatusCode.Accepted)
-//            } else {
-//                call.respondText("Not Found", status = HttpStatusCode.NotFound)
-//            }
-//
-//        }
+
+        delete("{id?}") {
+            val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
+            if (!dao.deleteCustomer(id.toInt())) {
+                call.respondText(
+                    "No customer with id $id",
+                    status = HttpStatusCode.NotFound
+                )
+            } else {
+                call.respondText(text = "Customer deleted", status = HttpStatusCode.Accepted)
+            }
+        }
     }
 }

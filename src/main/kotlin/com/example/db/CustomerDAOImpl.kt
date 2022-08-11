@@ -45,6 +45,10 @@ class CustomerDAOImpl : CustomerDAO {
         }
         insertStatement.resultedValues?.singleOrNull()?.let { mapResultRowToModel(it) }
     }
+
+    override suspend fun deleteCustomer(id: Int): Boolean = dbQuery {
+        CustomersTable.deleteWhere { CustomersTable.id eq id } > 0
+    }
 }
 
 val dao: CustomerDAO = CustomerDAOImpl().apply {

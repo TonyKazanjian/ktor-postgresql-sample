@@ -36,6 +36,17 @@ fun Route.customerRouting() {
             call.respondText("Customer stored correctly", status = HttpStatusCode.Created)
         }
 
+        patch("{id?}"){
+            val id = call.parameters["id"] ?: return@patch call.respondText(
+                "Missing id",
+                status = HttpStatusCode.BadRequest
+            )
+
+            val customerUpdate = call.receive<Customer>()
+            dao.editCustomer(id.toInt(), customerUpdate.firstName, customerUpdate.lastName, customerUpdate.email)
+            call.respondText("Customer updated correctly", status = HttpStatusCode.Accepted)
+        }
+
         delete("{id?}") {
             val id = call.parameters["id"] ?: return@delete call.respond(HttpStatusCode.BadRequest)
             if (!dao.deleteCustomer(id.toInt())) {

@@ -11,11 +11,22 @@ Content-Type: application/json
 }
 
 ###
+PATCH http://127.0.0.1:8080/customer/6
+Content-Type: application/json
+
+{
+  "id": 0,
+  "firstName": "Tony",
+  "lastName": "K",
+  "email": ""
+}
+
+###
 GET http://127.0.0.1:8080/customer
 Accept: application/json
 
 ###
-GET http://127.0.0.1:8080/customer/1
+GET http://127.0.0.1:8080/customer/6
 Accept: application/json
 
 ###

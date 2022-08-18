@@ -51,7 +51,12 @@ class CustomerDAOImpl : CustomerDAO {
         customerToEdit?.firstName = firstName
         customerToEdit?.lastName = lastName
         customerToEdit?.email = email
-        mapResultRowToModel(customerToEdit!!.readValues)
+        Customer(
+            id = id,
+            firstName = customerToEdit?.firstName ?: firstName,
+            lastName = customerToEdit?.lastName ?: lastName,
+            email = customerToEdit?.email ?: email
+        )
     }
 
     override suspend fun deleteCustomer(id: Int): Boolean = dbQuery {

@@ -32,8 +32,9 @@ fun Route.customerRouting() {
         }
         post {
             val customer = call.receive<Customer>()
-            dao.addNewCustomer(customer.firstName, customer.lastName, customer.email)
-            call.respondText("Customer stored correctly", status = HttpStatusCode.Created)
+            val newCustomer = dao.addNewCustomer(customer.firstName, customer.lastName, customer.email) ?:
+                return@post call.respondText("Error", status = HttpStatusCode.InternalServerError)
+            call.respond(HttpStatusCode.Created, newCustomer)
         }
 
         patch("{id?}"){
@@ -42,9 +43,10 @@ fun Route.customerRouting() {
                 status = HttpStatusCode.BadRequest
             )
 
-            val customerUpdate = call.receive<Customer>()
-            dao.editCustomer(id.toInt(), customerUpdate.firstName, customerUpdate.lastName, customerUpdate.email)
-            call.respondText("Customer updated correctly", status = HttpStatusCode.Accepted)
+            val updateRequest = call.receive<Customer>()
+            val updatedCustomer = dao.editCustomer(id.toInt(), updateRequest.firstName, updateRequest.lastName, updateRequest.email) ?:
+                return@patch call.respondText("Error", status = HttpStatusCode.InternalServerError)
+            call.respond(HttpStatusCode.Accepted, updatedCustomer)
         }
 
         delete("{id?}") {

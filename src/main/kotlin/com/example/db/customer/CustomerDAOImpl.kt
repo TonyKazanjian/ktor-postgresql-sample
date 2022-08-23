@@ -1,8 +1,8 @@
-package com.example.db
+package com.example.db.customer
 
-import com.example.db.CustomersTable.email
-import com.example.db.CustomersTable.firstName
-import com.example.db.CustomersTable.lastName
+import com.example.db.customer.CustomersTable.email
+import com.example.db.customer.CustomersTable.firstName
+import com.example.db.customer.CustomersTable.lastName
 import com.example.db.DatabaseFactory.dbQuery
 import com.example.models.Customer
 import org.jetbrains.exposed.sql.*

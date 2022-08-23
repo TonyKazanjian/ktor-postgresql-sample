@@ -1,4 +1,4 @@
-import com.example.db.CustomerDAO
+import com.example.db.customer.CustomerDAO
 import com.example.models.Customer
 
 class CustomerDAOFake: CustomerDAO {

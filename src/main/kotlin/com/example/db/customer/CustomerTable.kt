@@ -1,4 +1,4 @@
-package com.example.db
+package com.example.db.customer
 
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass

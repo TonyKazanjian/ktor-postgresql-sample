@@ -1,4 +1,4 @@
-package com.example.db
+package com.example.db.customer
 
 import com.example.models.Customer
 

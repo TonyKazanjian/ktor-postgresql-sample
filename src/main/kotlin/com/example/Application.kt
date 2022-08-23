@@ -1,9 +1,7 @@
 package com.example
 
-import com.example.db.CustomerDAO
-import com.example.db.CustomerDAOImpl
+import com.example.db.customer.CustomerDAOImpl
 import com.example.db.DatabaseFactory
-import com.example.models.Customer
 import com.example.plugins.*
 import io.ktor.server.application.*
 import kotlinx.coroutines.runBlocking

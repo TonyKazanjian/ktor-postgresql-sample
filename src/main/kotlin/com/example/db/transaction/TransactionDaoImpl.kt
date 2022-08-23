@@ -12,3 +12,11 @@ class TransactionDaoImpl: TransactionDao {
         TODO("Not yet implemented")
     }
 }
+
+fun TransactionEntity.mapToModel(): Transaction =
+    Transaction(
+        id = this.id.value,
+        item = this.item,
+        price = this.price,
+        timestamp = this.timestamp
+    )

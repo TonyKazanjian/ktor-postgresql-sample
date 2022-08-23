@@ -4,6 +4,7 @@ import com.example.db.customer.CustomersTable.email
 import com.example.db.customer.CustomersTable.firstName
 import com.example.db.customer.CustomersTable.lastName
 import com.example.db.DatabaseFactory.dbQuery
+import com.example.db.transaction.mapToModel
 import com.example.models.Customer
 import org.jetbrains.exposed.sql.*
 
@@ -11,18 +12,15 @@ import org.jetbrains.exposed.sql.*
 class CustomerDAOImpl : CustomerDAO {
 
     override suspend fun allCustomers(): List<Customer> = dbQuery {
-        CustomersTable
-            .selectAll()
-            .mapLazy { mapResultRowToModel(it) }
-            .toList()
+        CustomerEntity
+            .all()
+            .mapLazy {
+                it.mapToModel()
+            }.toList()
     }
 
     override suspend fun customer(id: Int): Customer? = dbQuery {
-        CustomersTable.select {
-            CustomersTable.id eq id
-        }
-            .mapLazy { mapResultRowToModel(it)}
-            .singleOrNull()
+        CustomerEntity.findById(id)?.mapToModel()
     }
 
     override suspend fun addNewCustomer(firstName: String, lastName: String, email: String): Customer? = dbQuery {
@@ -45,12 +43,7 @@ class CustomerDAOImpl : CustomerDAO {
         updateEntity(customerToEdit?.email, email){
             customerToEdit?.email = email
         }
-        Customer(
-            id = id,
-            firstName = customerToEdit?.firstName ?: firstName,
-            lastName = customerToEdit?.lastName ?: lastName,
-            email = customerToEdit?.email ?: email
-        )
+        customerToEdit?.mapToModel()
     }
 
     override suspend fun deleteCustomer(id: Int): Boolean = dbQuery {
@@ -71,5 +64,16 @@ class CustomerDAOImpl : CustomerDAO {
             email = row[email]
         )
 }
+
+fun CustomerEntity.mapToModel(): Customer =
+    Customer(
+        id = this.id.value,
+        firstName = this.firstName,
+        lastName = this.lastName,
+        email = this.email,
+        transactions = this.transactions.mapLazy { entity ->
+            entity.mapToModel()
+        }.toList()
+    )
 
 

@@ -1,22 +1,21 @@
 package com.example.routes
 
-import com.example.db.dao
+import com.example.db.CustomerDAO
 import com.example.models.Customer
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.util.*
 
-fun Route.customerRouting() {
+fun Route.customerRouting(dao: CustomerDAO) {
     route("/customer") {
         get {
             val customers = dao.allCustomers()
             if (customers.isNotEmpty()){
                 call.respond(customers)
             } else {
-                call.respondText("No customers found", status = HttpStatusCode.OK)
+                call.respondText("No customers found", status = HttpStatusCode.NotFound)
             }
         }
         get("{id?}"){

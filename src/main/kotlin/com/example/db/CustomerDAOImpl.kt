@@ -1,26 +1,14 @@
 package com.example.db
 
-import com.example.db.CustomersTable
-import com.example.models.Customer
-import org.jetbrains.exposed.sql.selectAll
-import com.example.db.DatabaseFactory.dbQuery
 import com.example.db.CustomersTable.email
 import com.example.db.CustomersTable.firstName
-import com.example.db.CustomersTable.id
 import com.example.db.CustomersTable.lastName
-import kotlinx.coroutines.runBlocking
+import com.example.db.DatabaseFactory.dbQuery
+import com.example.models.Customer
 import org.jetbrains.exposed.sql.*
 
 
 class CustomerDAOImpl : CustomerDAO {
-
-    private fun mapResultRowToModel(row: ResultRow) =
-        Customer(
-            id = row[CustomersTable.id].value,
-            firstName = row[firstName],
-            lastName = row[lastName],
-            email = row[email]
-        )
 
     override suspend fun allCustomers(): List<Customer> = dbQuery {
         CustomersTable
@@ -48,9 +36,15 @@ class CustomerDAOImpl : CustomerDAO {
 
     override suspend fun editCustomer(id: Int, firstName: String, lastName: String, email: String): Customer? = dbQuery {
         val customerToEdit = CustomerEntity.findById(id)
-        customerToEdit?.firstName = firstName
-        customerToEdit?.lastName = lastName
-        customerToEdit?.email = email
+        updateEntity(customerToEdit?.firstName, firstName){
+            customerToEdit?.firstName = firstName
+        }
+        updateEntity(customerToEdit?.lastName, lastName){
+            customerToEdit?.lastName = lastName
+        }
+        updateEntity(customerToEdit?.email, email){
+            customerToEdit?.email = email
+        }
         Customer(
             id = id,
             firstName = customerToEdit?.firstName ?: firstName,
@@ -62,12 +56,20 @@ class CustomerDAOImpl : CustomerDAO {
     override suspend fun deleteCustomer(id: Int): Boolean = dbQuery {
         CustomersTable.deleteWhere { CustomersTable.id eq id } > 0
     }
-}
 
-val dao: CustomerDAO = CustomerDAOImpl().apply {
-    runBlocking {
-        if(allCustomers().isEmpty()) {
-            addNewCustomer("Leona", "Kazanjian", "leona@gmail.com")
+    private fun updateEntity(oldData: String?, newData: String?, executeUpdate: () -> Unit) {
+        if (oldData != newData) {
+            executeUpdate()
         }
     }
+
+    private fun mapResultRowToModel(row: ResultRow) =
+        Customer(
+            id = row[CustomersTable.id].value,
+            firstName = row[firstName],
+            lastName = row[lastName],
+            email = row[email]
+        )
 }
+
+

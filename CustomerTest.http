@@ -11,13 +11,13 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://127.0.0.1:8080/customer/5
+PATCH http://127.0.0.1:8080/customer/1
 Content-Type: application/json
 
 {
-  "id": 0,
+  "id": 3,
   "firstName": "Tony",
-  "lastName": "K",
+  "lastName": "Kazanjian",
   "email": "tony@email.com "
 }
 
@@ -26,9 +26,9 @@ GET http://127.0.0.1:8080/customer
 Accept: application/json
 
 ###
-GET http://127.0.0.1:8080/customer/8
+GET http://127.0.0.1:8080/customer/3
 Accept: application/json
 
 ###
-DELETE http://127.0.0.1:8080/customer/1
+DELETE http://127.0.0.1:8080/customer/2
 

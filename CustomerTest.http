@@ -26,7 +26,7 @@ GET http://127.0.0.1:8080/customer
 Accept: application/json
 
 ###
-GET http://127.0.0.1:8080/customer/6
+GET http://127.0.0.1:8080/customer/1
 Accept: application/json
 
 ###

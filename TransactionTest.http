@@ -1,0 +1,14 @@
+###
+POST http://127.0.0.1:8080/transaction/1
+Content-Type: application/json
+
+{
+  "id": 0,
+  "item": "Ice Cream",
+  "price": 6.00,
+  "timestamp": 1000000000
+}
+
+###
+GET http://127.0.0.1:8080/transaction/1
+Content-Type: application/json

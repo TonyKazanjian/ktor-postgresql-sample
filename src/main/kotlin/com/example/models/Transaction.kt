@@ -6,4 +6,4 @@ import kotlinx.serialization.Serializable
 data class Transaction(val id: Int, val item: String, val price: Float, val timestamp: Long)
 
 @Serializable
-data class Receipt(val transactions: List<Transaction>, val total: Float)
+data class Receipt(val customer: Customer, val transactions: List<Transaction>, val total: Float)

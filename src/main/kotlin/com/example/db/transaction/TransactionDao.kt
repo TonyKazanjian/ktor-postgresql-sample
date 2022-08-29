@@ -1,5 +1,6 @@
 package com.example.db.transaction
 
+import com.example.models.Receipt
 import com.example.models.Transaction
 
 interface TransactionDao {
@@ -8,7 +9,6 @@ interface TransactionDao {
         item: String,
         price: Float
     ): Transaction?
-    suspend fun getTransactionsByCustomer(customerId: Int): List<Transaction>?
 
-    //TODO - get receipt
+    suspend fun getReceiptForCustomer(customerId: Int): Receipt?
 }

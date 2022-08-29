@@ -2,6 +2,7 @@ package com.example.db.transaction
 
 import com.example.db.DatabaseFactory.dbQuery
 import com.example.db.customer.CustomerEntity
+import com.example.models.Receipt
 import com.example.models.Transaction
 import org.jetbrains.exposed.sql.mapLazy
 
@@ -22,9 +23,11 @@ class TransactionDaoImpl: TransactionDao {
         transaction.mapToModel()
     }
 
-    override suspend fun getTransactionsByCustomer(customerId: Int): List<Transaction>? = dbQuery {
+    override suspend fun getReceiptForCustomer(customerId: Int): Receipt? = dbQuery {
         val customer = CustomerEntity.findById(customerId)
-        customer?.transactions?.mapLazy { it.mapToModel() }?.toList()
+        customer?.transactions?.mapLazy { it.mapToModel() }?.toList()?.let {
+            Receipt(transactions = it, total = it.map { transaction -> transaction.price }.sum())
+        }
     }
 }
 

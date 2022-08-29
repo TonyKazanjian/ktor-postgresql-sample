@@ -10,12 +10,12 @@ import io.ktor.server.routing.*
 
 fun Route.transactionRouting(dao: TransactionDao) {
     route("/transaction"){
-        get("{id?}"){
+        get("/receipt/{id?}"){
             val id = call.parameters["id"] ?: return@get call.respondText(
                 "Missing id",
                 status = HttpStatusCode.BadRequest
             )
-            val transaction = dao.getTransactionsByCustomer(id.toInt()) ?: return@get call.respondText(
+            val transaction = dao.getReceiptForCustomer(id.toInt()) ?: return@get call.respondText(
                 "No customer with id $id",
                 status = HttpStatusCode.NotFound
             )

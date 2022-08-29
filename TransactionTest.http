@@ -10,5 +10,5 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/transaction/1
+GET http://127.0.0.1:8080/transaction/receipt/1
 Content-Type: application/json

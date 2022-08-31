@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "id": 0,
-  "item": "Soda",
-  "price": 2.00,
+  "item": "Fries",
+  "price": 8.00,
   "timestamp": 1000000000
 }
 

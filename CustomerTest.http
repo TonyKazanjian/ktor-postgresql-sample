@@ -1,6 +1,6 @@
 
 ###
-POST http://127.0.0.1:8080/customer
+GET http://127.0.0.1:8080/customers/new
 Content-Type: application/json
 
 {
@@ -11,24 +11,24 @@ Content-Type: application/json
 }
 
 ###
-PATCH http://127.0.0.1:8080/customer/10
+GET http://127.0.0.1:8080/customers/6/edit
 Content-Type: application/json
 
 {
   "id": 3,
-  "firstName": "Tony",
+  "firstName": "Tony11",
   "lastName": "Kazanjian",
   "email": "tony@email.com "
 }
 
 ###
-GET http://127.0.0.1:8080/customer
+GET http://127.0.0.1:8080/customers
 Accept: application/json
 
 ###
-GET http://127.0.0.1:8080/customer/1
+GET http://127.0.0.1:8080/customers/6
 Accept: application/json
 
 ###
-DELETE http://127.0.0.1:8080/customer/9
+DELETE http://127.0.0.1:8080/customers/13
 

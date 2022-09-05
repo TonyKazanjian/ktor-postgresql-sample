@@ -18,3 +18,20 @@ class Customers {
         class Edit(val parent: Id)
     }
 }
+
+@Serializable
+@Resource("/transactions")
+class Transactions {
+
+    @Serializable
+    @Resource("{id}")
+    class Id(val parent: Transactions = Transactions(), val id: Long) {
+        @Serializable
+        @Resource("receipt")
+        class Receipt(val parent: Id)
+
+        @Serializable
+        @Resource("new")
+        class New(val parent: Id)
+    }
+}

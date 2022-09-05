@@ -11,7 +11,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.customerRouting(dao: CustomerDAO) {
-
     get<Customers>{
         val customers = dao.allCustomers()
         if (customers.isNotEmpty()){

@@ -1,5 +1,5 @@
 ###
-POST http://127.0.0.1:8080/transaction/1
+GET http://127.0.0.1:8080/transactions/6/new
 Content-Type: application/json
 
 {
@@ -10,5 +10,5 @@ Content-Type: application/json
 }
 
 ###
-GET http://127.0.0.1:8080/transaction/receipt/1
+GET http://127.0.0.1:8080/transactions/6/receipt
 Content-Type: application/json
